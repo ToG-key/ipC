@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🌐 IP của bạn</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: radial-gradient(ellipse at 20% 50%, #0f172a, #020617);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e2e8f0;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 28px;
+            padding: 48px 40px 40px;
+            max-width: 540px;
+            width: 100%;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.07), transparent 60%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.12);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 100px;
+            padding: 4px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #818cf8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+
+        h1 span {
+            background: linear-gradient(135deg, #818cf8, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub {
+            font-size: 14px;
+            color: #64748b;
+            margin-top: 4px;
+            position: relative;
+        }
+
+        .ip-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin: 24px 0;
+            position: relative;
+            transition: border-color 0.3s;
+        }
+
+        .ip-box:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .ip-box .label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .ip-box .ip {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 34px;
+            font-weight: 700;
+            color: #a5b4fc;
+            letter-spacing: 1px;
+            text-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        .ip-box .ip.loading {
+            animation: pulse 1.5s ease-in-out infinite;
+            color: #64748b;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .ip-box .copy-btn {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ip-box .copy-btn:hover {
+            background: rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 4px;
+            position: relative;
+        }
+
+        .info-item {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .info-item .label {
+            font-size: 9px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .info-item .value {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 2px;
+            color: #e2e8f0;
+        }
+
+        .info-item .value.green {
+            color: #34d399;
+        }
+        .info-item .value.yellow {
+            color: #fbbf24;
+        }
+        .info-item .value.purple {
+            color: #a78bfa;
+        }
+        .info-item .value.red {
+            color: #f87171;
+        }
+
+        .info-item.full {
+            grid-column: 1 / -1;
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #334155;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer a {
+            color: #6366f1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #818cf8;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #0f172a;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #e2e8f0;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 20px 28px;
+            }
+            .ip-box .ip {
+                font-size: 26px;
+            }
+            .ip-box .copy-btn {
+                position: static;
+                transform: none;
+                margin-top: 10px;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="badge">🔒 Bảo mật</div>
+        <span class="icon">🌐</span>
+        <h1>Địa chỉ <span>IP</span> của bạn</h1>
+        <p class="sub">Thông tin kết nối Internet hiện tại</p>
+
+        <div class="ip-box">
+            <div class="label">ĐỊA CHỈ IP CÔNG CỘNG</div>
+            <div class="ip loading" id="ipDisplay">Đang lấy...</div>
+            <button class="copy-btn" onclick="copyIP()">📋 Sao chép</button>
+        </div>
+
+        <div class="info-grid" id="infoGrid">
+            <div class="info-item">
+                <div class="label">📍 Vị trí</div>
+                <div class="value green" id="location">Đang tải...</div>
+            </div>
+            <div class="info-item">
+                <div class="label">📡 Nhà mạng</div>
+                <div class="value yellow" id="isp">Đang tải...</div>
+            </div>
+            <div class="info-item">
+                <div class="label">🌍 Quốc gia</div>
+                <div class="value purple" id="country">Đang tải...</div>
+            </div>
+            <div class="info-item">
+                <div class="label">🔌 Kết nối</div>
+                <div class="value" id="connection">Đang tải...</div>
+            </div>
+            <div class="info-item full">
+                <div class="label">🖥️ Trình duyệt</div>
+                <div class="value" id="browser" style="font-size:13px; color:#94a3b8; word-break:break-all;">Đang tải...</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span id="timestamp"></span>
+            <a href="#" onclick="fetchIP(); return false;">⟳ Làm mới</a>
+            <span>•</span>
+            <span style="color:#1e293b;">v1.0</span>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ===== LẤY IP TỪ NHIỀU API =====
+        async function fetchIP() {
+            const ipDisplay = document.getElementById('ipDisplay');
+            const locationEl = document.getElementById('location');
+            const ispEl = document.getElementById('isp');
+            const countryEl = document.getElementById('country');
+            const connectionEl = document.getElementById('connection');
+            const browserEl = document.getElementById('browser');
+
+            ipDisplay.className = 'ip loading';
+            ipDisplay.textContent = '⏳ Đang lấy...';
+            locationEl.textContent = 'Đang tải...';
+            ispEl.textContent = 'Đang tải...';
+            countryEl.textContent = 'Đang tải...';
+            connectionEl.textContent = 'Đang tải...';
+
+            try {
+                // ===== GỌI NHIỀU API ĐỂ LẤY IP =====
+                let ip = null;
+                let geoData = null;
+
+                // 1. Lấy IP từ api.ipify.org
+                try {
+                    const res1 = await fetch('https://api.ipify.org?format=json');
+                    const data1 = await res1.json();
+                    ip = data1.ip;
+                } catch (e) {}
+
+                // 2. Nếu lỗi, thử ip-api.com
+                if (!ip) {
+                    try {
+                        const res2 = await fetch('https://ipapi.co/json/');
+                        const data2 = await res2.json();
+                        ip = data2.ip;
+                    } catch (e) {}
+                }
+
+                // 3. Nếu vẫn lỗi, thử icanhazip
+                if (!ip) {
+                    try {
+                        const res3 = await fetch('https://icanhazip.com');
+                        ip = (await res3.text()).trim();
+                    } catch (e) {}
+                }
+
+                // 4. Nếu vẫn lỗi, thử ipinfo.io
+                if (!ip) {
+                    try {
+                        const res4 = await fetch('https://ipinfo.io/json');
+                        const data4 = await res4.json();
+                        ip = data4.ip;
+                        geoData = data4;
+                    } catch (e) {}
+                }
+
+                // 5. Nếu có ip, lấy thông tin địa lý
+                if (ip && !geoData) {
+                    try {
+                        const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
+                        geoData = await geoRes.json();
+                    } catch (e) {}
+
+                    // Thử ip-api.com nếu ipapi lỗi
+                    if (!geoData || geoData.error) {
+                        try {
+                            const geoRes2 = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,region,regionName,city,isp,org,as,proxy,hosting`);
+                            const data = await geoRes2.json();
+                            if (data.status === 'success') {
+                                geoData = {
+                                    country_name: data.country,
+                                    country_code: data.countryCode,
+                                    region: data.regionName,
+                                    city: data.city,
+                                    org: data.isp || data.org,
+                                    asn: data.as,
+                                    proxy: data.proxy,
+                                    hosting: data.hosting
+                                };
+                            }
+                        } catch (e) {}
+                    }
+                }
+
+                // ===== HIỂN THỊ =====
+                if (ip) {
+                    ipDisplay.className = 'ip';
+                    ipDisplay.textContent = ip;
+                    document.getElementById('timestamp').textContent = new Date().toLocaleString('vi-VN');
+
+                    if (geoData) {
+                        const city = geoData.city || geoData.region || '';
+                        const country = geoData.country_name || geoData.country || '';
+                        const isp = geoData.org || geoData.isp || geoData.asn || 'Không rõ';
+
+                        locationEl.textContent = city ? `${city}, ${country}` : country || 'Không xác định';
+                        ispEl.textContent = isp;
+                        countryEl.textContent = country || 'Không xác định';
+
+                        const isProxy = geoData.proxy === true || geoData.hosting === true;
+                        connectionEl.textContent = isProxy ? '🔒 Proxy/VPN' : '🌍 Trực tiếp';
+                        connectionEl.style.color = isProxy ? '#fbbf24' : '#34d399';
+                    } else {
+                        locationEl.textContent = '⚠️ Không lấy được vị trí';
+                        ispEl.textContent = '⚠️ Không rõ';
+                        countryEl.textContent = '⚠️ Không rõ';
+                        connectionEl.textContent = '🌍 Không rõ';
+                        connectionEl.style.color = '#94a3b8';
+                    }
+                } else {
+                    ipDisplay.className = 'ip';
+                    ipDisplay.textContent = '❌ Không lấy được IP';
+                    locationEl.textContent = '⚠️ Lỗi';
+                    ispEl.textContent = '⚠️ Lỗi';
+                    countryEl.textContent = '⚠️ Lỗi';
+                    connectionEl.textContent = '⚠️ Lỗi';
+                }
+
+                // ===== USER AGENT =====
+                const ua = navigator.userAgent;
+                let browser = 'Không rõ';
+                if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Google Chrome';
+                else if (ua.includes('Edg')) browser = 'Microsoft Edge';
+                else if (ua.includes('Firefox')) browser = 'Mozilla Firefox';
+                else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Apple Safari';
+                else if (ua.includes('Opera') || ua.includes('OPR')) browser = 'Opera';
+                else if (ua.includes('Brave')) browser = 'Brave';
+                else if (ua.includes('Trident')) browser = 'Internet Explorer';
+                browserEl.textContent = browser + ' · ' + (ua.split(' ').slice(-2).join(' ') || ua.slice(0, 60));
+
+            } catch (error) {
+                ipDisplay.className = 'ip';
+                ipDisplay.textContent = '⚠️ Lỗi kết nối';
+                locationEl.textContent = '⚠️ Lỗi';
+                ispEl.textContent = '⚠️ Lỗi';
+                countryEl.textContent = '⚠️ Lỗi';
+                connectionEl.textContent = '⚠️ Lỗi';
+                console.error('Lỗi lấy IP:', error);
+            }
+        }
+
+        // ===== SAO CHÉP =====
+        function copyIP() {
+            const ip = document.getElementById('ipDisplay').textContent;
+            if (!ip || ip.includes('Đang') || ip.includes('Lỗi')) {
+                showToast('⚠️ Chưa có IP để sao chép');
+                return;
+            }
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(ip).then(() => {
+                    showToast('✅ Đã sao chép IP: ' + ip);
+                }).catch(() => fallbackCopy(ip));
+            } else {
+                fallbackCopy(ip);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            input.remove();
+            showToast('✅ Đã sao chép IP: ' + text);
+        }
+
+        // ===== TOAST =====
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(el._timer);
+            el._timer = setTimeout(() => el.classList.remove('show'), 2800);
+        }
+
+        // ===== TỰ ĐỘNG CHẠY =====
+        fetchIP();
+    </script>
+</body>
+</html>
