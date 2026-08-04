@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌐 IP của bạn</title>
+    <title>🌐 IP & GPS của bạn</title>
     <style>
         * {
             margin: 0;
@@ -28,8 +28,8 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 28px;
-            padding: 48px 40px 40px;
-            max-width: 540px;
+            padding: 40px 36px 36px;
+            max-width: 580px;
             width: 100%;
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
             text-align: center;
@@ -59,19 +59,19 @@
             color: #818cf8;
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             position: relative;
         }
 
         .icon {
-            font-size: 48px;
+            font-size: 44px;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             position: relative;
         }
 
         h1 {
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 700;
             letter-spacing: -0.3px;
             position: relative;
@@ -86,7 +86,7 @@
         .sub {
             font-size: 14px;
             color: #64748b;
-            margin-top: 4px;
+            margin-top: 2px;
             position: relative;
         }
 
@@ -94,8 +94,8 @@
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(99, 102, 241, 0.2);
             border-radius: 16px;
-            padding: 20px 24px;
-            margin: 24px 0;
+            padding: 18px 24px;
+            margin: 20px 0 18px;
             position: relative;
             transition: border-color 0.3s;
         }
@@ -114,12 +114,12 @@
 
         .ip-box .ip {
             font-family: 'JetBrains Mono', 'Courier New', monospace;
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 700;
             color: #a5b4fc;
             letter-spacing: 1px;
             text-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
-            margin-top: 4px;
+            margin-top: 2px;
             word-break: break-all;
         }
 
@@ -159,11 +159,110 @@
             color: #a5b4fc;
         }
 
+        /* ===== GPS ===== */
+        .gps-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin: 0 0 18px;
+            text-align: left;
+            transition: border-color 0.3s;
+        }
+
+        .gps-box:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .gps-box .label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gps-box .label .status {
+            font-size: 10px;
+            font-weight: 400;
+            color: #fbbf24;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .gps-box .label .status.active {
+            color: #34d399;
+        }
+
+        .gps-box .coords {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 15px;
+            font-weight: 600;
+            color: #34d399;
+            margin-top: 6px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .gps-box .coords span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .gps-box .coords .label-sm {
+            font-size: 11px;
+            font-weight: 400;
+            color: #64748b;
+        }
+
+        .gps-btn {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .gps-btn:hover {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .gps-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .gps-map {
+            margin-top: 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: 180px;
+            background: #0f172a;
+            display: none;
+        }
+
+        .gps-map iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ===== INFO GRID ===== */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-            margin-top: 4px;
+            margin-top: 2px;
             position: relative;
         }
 
@@ -171,7 +270,7 @@
             background: rgba(0, 0, 0, 0.25);
             border: 1px solid rgba(255, 255, 255, 0.04);
             border-radius: 12px;
-            padding: 12px 14px;
+            padding: 11px 14px;
             text-align: left;
         }
 
@@ -186,8 +285,9 @@
         .info-item .value {
             font-size: 14px;
             font-weight: 600;
-            margin-top: 2px;
+            margin-top: 1px;
             color: #e2e8f0;
+            word-break: break-word;
         }
 
         .info-item .value.green {
@@ -199,8 +299,14 @@
         .info-item .value.purple {
             color: #a78bfa;
         }
-        .info-item .value.red {
-            color: #f87171;
+        .info-item .value.cyan {
+            color: #22d3ee;
+        }
+        .info-item .value.pink {
+            color: #f472b6;
+        }
+        .info-item .value.gold {
+            color: #f59e0b;
         }
 
         .info-item.full {
@@ -208,7 +314,7 @@
         }
 
         .footer {
-            margin-top: 24px;
+            margin-top: 20px;
             font-size: 12px;
             color: #334155;
             position: relative;
@@ -253,10 +359,10 @@
 
         @media (max-width: 480px) {
             .card {
-                padding: 32px 20px 28px;
+                padding: 28px 16px 24px;
             }
             .ip-box .ip {
-                font-size: 26px;
+                font-size: 24px;
             }
             .ip-box .copy-btn {
                 position: static;
@@ -266,6 +372,10 @@
             .info-grid {
                 grid-template-columns: 1fr;
             }
+            .gps-box .coords {
+                font-size: 13px;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -273,19 +383,39 @@
 
     <div class="card">
         <div class="badge">🔒 Bảo mật</div>
-        <span class="icon">🌐</span>
-        <h1>Địa chỉ <span>IP</span> của bạn</h1>
-        <p class="sub">Thông tin kết nối Internet hiện tại</p>
+        <span class="icon">📍</span>
+        <h1>IP &amp; <span>GPS</span> của bạn</h1>
+        <p class="sub">Địa chỉ IP và vị trí thực tế (nếu cho phép)</p>
 
+        <!-- ===== IP ===== -->
         <div class="ip-box">
             <div class="label">ĐỊA CHỈ IP CÔNG CỘNG</div>
             <div class="ip loading" id="ipDisplay">Đang lấy...</div>
             <button class="copy-btn" onclick="copyIP()">📋 Sao chép</button>
         </div>
 
+        <!-- ===== GPS ===== -->
+        <div class="gps-box" id="gpsBox">
+            <div class="label">
+                📡 GPS / Vị trí thực tế
+                <span class="status" id="gpsStatus">🔴 Chưa cấp quyền</span>
+            </div>
+            <div class="coords" id="gpsCoords">
+                <span><span class="label-sm">🌐 Vĩ độ:</span> <span id="gpsLat">--</span></span>
+                <span><span class="label-sm">🌐 Kinh độ:</span> <span id="gpsLon">--</span></span>
+                <span><span class="label-sm">🎯 Độ chính xác:</span> <span id="gpsAccuracy">--</span></span>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+                <button class="gps-btn" id="gpsBtn" onclick="getGPS()">📍 Lấy vị trí GPS</button>
+                <button class="gps-btn" id="gpsMapBtn" onclick="toggleMap()" style="display:none;">🗺️ Xem bản đồ</button>
+            </div>
+            <div class="gps-map" id="gpsMap"></div>
+        </div>
+
+        <!-- ===== INFO ===== -->
         <div class="info-grid" id="infoGrid">
             <div class="info-item">
-                <div class="label">📍 Vị trí</div>
+                <div class="label">📍 Vị trí (IP)</div>
                 <div class="value green" id="location">Đang tải...</div>
             </div>
             <div class="info-item">
@@ -293,59 +423,195 @@
                 <div class="value yellow" id="isp">Đang tải...</div>
             </div>
             <div class="info-item">
-                <div class="label">🌍 Quốc gia</div>
-                <div class="value purple" id="country">Đang tải...</div>
+                <div class="label">📱 Thiết bị</div>
+                <div class="value cyan" id="device">Đang tải...</div>
+            </div>
+            <div class="info-item">
+                <div class="label">🌐 Trình duyệt</div>
+                <div class="value purple" id="browser">Đang tải...</div>
+            </div>
+            <div class="info-item">
+                <div class="label">🖥️ Màn hình</div>
+                <div class="value pink" id="screen">Đang tải...</div>
             </div>
             <div class="info-item">
                 <div class="label">🔌 Kết nối</div>
-                <div class="value" id="connection">Đang tải...</div>
-            </div>
-            <div class="info-item full">
-                <div class="label">🖥️ Trình duyệt</div>
-                <div class="value" id="browser" style="font-size:13px; color:#94a3b8; word-break:break-all;">Đang tải...</div>
+                <div class="value gold" id="connection">Đang tải...</div>
             </div>
         </div>
 
         <div class="footer">
             <span id="timestamp"></span>
-            <a href="#" onclick="fetchIP(); return false;">⟳ Làm mới</a>
+            <a href="#" onclick="location.reload();">⟳ Làm mới</a>
             <span>•</span>
-            <span style="color:#1e293b;">v1.0</span>
+            <span style="color:#1e293b;">v3.0</span>
         </div>
     </div>
 
     <div class="toast" id="toast"></div>
 
     <script>
-        // ===== LẤY IP TỪ NHIỀU API =====
+        let gpsLat = null;
+        let gpsLon = null;
+        let gpsAccuracy = null;
+        let mapVisible = false;
+
+        // ===== LẤY GPS =====
+        function getGPS() {
+            const status = document.getElementById('gpsStatus');
+            const latEl = document.getElementById('gpsLat');
+            const lonEl = document.getElementById('gpsLon');
+            const accEl = document.getElementById('gpsAccuracy');
+            const btn = document.getElementById('gpsBtn');
+
+            if (!navigator.geolocation) {
+                status.textContent = '❌ Trình duyệt không hỗ trợ GPS';
+                status.className = 'status';
+                status.style.color = '#f87171';
+                showToast('⚠️ Trình duyệt không hỗ trợ Geolocation');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⏳ Đang lấy...';
+            status.textContent = '⏳ Đang lấy vị trí...';
+            status.className = 'status';
+            status.style.color = '#fbbf24';
+
+            navigator.geolocation.getCurrentPosition(
+                // ===== THÀNH CÔNG =====
+                function(position) {
+                    gpsLat = position.coords.latitude;
+                    gpsLon = position.coords.longitude;
+                    gpsAccuracy = Math.round(position.coords.accuracy);
+
+                    latEl.textContent = gpsLat.toFixed(6);
+                    lonEl.textContent = gpsLon.toFixed(6);
+                    accEl.textContent = gpsAccuracy + 'm';
+
+                    status.textContent = '✅ Đã lấy vị trí';
+                    status.className = 'status active';
+                    status.style.color = '#34d399';
+
+                    btn.disabled = false;
+                    btn.textContent = '📍 Lấy lại GPS';
+
+                    document.getElementById('gpsMapBtn').style.display = 'inline-block';
+
+                    showToast('✅ Đã lấy vị trí GPS thành công!');
+
+                    // Tự động hiển thị bản đồ
+                    setTimeout(() => {
+                        toggleMap();
+                    }, 500);
+                },
+                // ===== LỖI =====
+                function(error) {
+                    let msg = 'Không xác định';
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            msg = '🚫 Người dùng từ chối cấp quyền GPS';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            msg = '📡 Không thể xác định vị trí (không có tín hiệu GPS)';
+                            break;
+                        case error.TIMEOUT:
+                            msg = '⏰ Quá thời gian chờ, thử lại sau';
+                            break;
+                    }
+                    status.textContent = '❌ ' + msg;
+                    status.className = 'status';
+                    status.style.color = '#f87171';
+                    btn.disabled = false;
+                    btn.textContent = '📍 Thử lại GPS';
+                    showToast('⚠️ ' + msg);
+                }, {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        // ===== TOGGLE MAP =====
+        function toggleMap() {
+            const mapEl = document.getElementById('gpsMap');
+            const btn = document.getElementById('gpsMapBtn');
+
+            if (!gpsLat || !gpsLon) {
+                showToast('⚠️ Chưa có tọa độ GPS');
+                return;
+            }
+
+            mapVisible = !mapVisible;
+
+            if (mapVisible) {
+                mapEl.style.display = 'block';
+                btn.textContent = '🗺️ Ẩn bản đồ';
+                mapEl.innerHTML = `
+                    <iframe 
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=${gpsLon-0.01}%2C${gpsLat-0.01}%2C${gpsLon+0.01}%2C${gpsLat+0.01}&layer=mapnik&marker=${gpsLat}%2C${gpsLon}"
+                        allowfullscreen
+                        loading="lazy"
+                    ></iframe>
+                `;
+            } else {
+                mapEl.style.display = 'none';
+                btn.textContent = '🗺️ Xem bản đồ';
+                mapEl.innerHTML = '';
+            }
+        }
+
+        // ===== LẤY IP =====
         async function fetchIP() {
             const ipDisplay = document.getElementById('ipDisplay');
             const locationEl = document.getElementById('location');
             const ispEl = document.getElementById('isp');
-            const countryEl = document.getElementById('country');
-            const connectionEl = document.getElementById('connection');
+            const deviceEl = document.getElementById('device');
             const browserEl = document.getElementById('browser');
+            const screenEl = document.getElementById('screen');
+            const connectionEl = document.getElementById('connection');
+
+            // Thiết bị
+            const ua = navigator.userAgent;
+            let device = 'Không rõ';
+            let os = 'Không rõ';
+            if (ua.includes('Windows NT 10.0')) { device = '💻 Windows 10/11';
+                os = 'Windows'; } else if (ua.includes('Mac OS X')) { device = '💻 macOS';
+                os = 'macOS'; } else if (ua.includes('iPhone')) { device = '📱 iPhone';
+                os = 'iOS'; } else if (ua.includes('iPad')) { device = '📱 iPad';
+                os = 'iPadOS'; } else if (ua.includes('Android')) { device = '📱 Android';
+                os = 'Android'; } else if (ua.includes('Linux')) { device = '💻 Linux';
+                os = 'Linux'; }
+            deviceEl.textContent = device;
+
+            let browser = 'Không rõ';
+            if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Google Chrome';
+            else if (ua.includes('Edg')) browser = 'Microsoft Edge';
+            else if (ua.includes('Firefox')) browser = 'Mozilla Firefox';
+            else if (ua.includes('Safari') && !ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Apple Safari';
+            else if (ua.includes('OPR')) browser = 'Opera';
+            browserEl.textContent = browser;
+
+            screenEl.textContent = screen.width + ' × ' + screen.height + 'px';
 
             ipDisplay.className = 'ip loading';
             ipDisplay.textContent = '⏳ Đang lấy...';
             locationEl.textContent = 'Đang tải...';
             ispEl.textContent = 'Đang tải...';
-            countryEl.textContent = 'Đang tải...';
             connectionEl.textContent = 'Đang tải...';
 
             try {
-                // ===== GỌI NHIỀU API ĐỂ LẤY IP =====
                 let ip = null;
                 let geoData = null;
 
-                // 1. Lấy IP từ api.ipify.org
+                // Lấy IP
                 try {
                     const res1 = await fetch('https://api.ipify.org?format=json');
                     const data1 = await res1.json();
                     ip = data1.ip;
                 } catch (e) {}
 
-                // 2. Nếu lỗi, thử ip-api.com
                 if (!ip) {
                     try {
                         const res2 = await fetch('https://ipapi.co/json/');
@@ -354,7 +620,6 @@
                     } catch (e) {}
                 }
 
-                // 3. Nếu vẫn lỗi, thử icanhazip
                 if (!ip) {
                     try {
                         const res3 = await fetch('https://icanhazip.com');
@@ -362,7 +627,6 @@
                     } catch (e) {}
                 }
 
-                // 4. Nếu vẫn lỗi, thử ipinfo.io
                 if (!ip) {
                     try {
                         const res4 = await fetch('https://ipinfo.io/json');
@@ -372,26 +636,23 @@
                     } catch (e) {}
                 }
 
-                // 5. Nếu có ip, lấy thông tin địa lý
+                // Lấy Geo
                 if (ip && !geoData) {
                     try {
                         const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
                         geoData = await geoRes.json();
                     } catch (e) {}
 
-                    // Thử ip-api.com nếu ipapi lỗi
                     if (!geoData || geoData.error) {
                         try {
-                            const geoRes2 = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,countryCode,region,regionName,city,isp,org,as,proxy,hosting`);
+                            const geoRes2 = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,regionName,city,isp,org,proxy,hosting`);
                             const data = await geoRes2.json();
                             if (data.status === 'success') {
                                 geoData = {
                                     country_name: data.country,
-                                    country_code: data.countryCode,
                                     region: data.regionName,
                                     city: data.city,
                                     org: data.isp || data.org,
-                                    asn: data.as,
                                     proxy: data.proxy,
                                     hosting: data.hosting
                                 };
@@ -400,7 +661,6 @@
                     }
                 }
 
-                // ===== HIỂN THỊ =====
                 if (ip) {
                     ipDisplay.className = 'ip';
                     ipDisplay.textContent = ip;
@@ -408,12 +668,11 @@
 
                     if (geoData) {
                         const city = geoData.city || geoData.region || '';
-                        const country = geoData.country_name || geoData.country || '';
-                        const isp = geoData.org || geoData.isp || geoData.asn || 'Không rõ';
+                        const country = geoData.country_name || '';
+                        const isp = geoData.org || geoData.isp || 'Không rõ';
 
                         locationEl.textContent = city ? `${city}, ${country}` : country || 'Không xác định';
                         ispEl.textContent = isp;
-                        countryEl.textContent = country || 'Không xác định';
 
                         const isProxy = geoData.proxy === true || geoData.hosting === true;
                         connectionEl.textContent = isProxy ? '🔒 Proxy/VPN' : '🌍 Trực tiếp';
@@ -421,7 +680,6 @@
                     } else {
                         locationEl.textContent = '⚠️ Không lấy được vị trí';
                         ispEl.textContent = '⚠️ Không rõ';
-                        countryEl.textContent = '⚠️ Không rõ';
                         connectionEl.textContent = '🌍 Không rõ';
                         connectionEl.style.color = '#94a3b8';
                     }
@@ -430,28 +688,14 @@
                     ipDisplay.textContent = '❌ Không lấy được IP';
                     locationEl.textContent = '⚠️ Lỗi';
                     ispEl.textContent = '⚠️ Lỗi';
-                    countryEl.textContent = '⚠️ Lỗi';
                     connectionEl.textContent = '⚠️ Lỗi';
                 }
-
-                // ===== USER AGENT =====
-                const ua = navigator.userAgent;
-                let browser = 'Không rõ';
-                if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Google Chrome';
-                else if (ua.includes('Edg')) browser = 'Microsoft Edge';
-                else if (ua.includes('Firefox')) browser = 'Mozilla Firefox';
-                else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Apple Safari';
-                else if (ua.includes('Opera') || ua.includes('OPR')) browser = 'Opera';
-                else if (ua.includes('Brave')) browser = 'Brave';
-                else if (ua.includes('Trident')) browser = 'Internet Explorer';
-                browserEl.textContent = browser + ' · ' + (ua.split(' ').slice(-2).join(' ') || ua.slice(0, 60));
 
             } catch (error) {
                 ipDisplay.className = 'ip';
                 ipDisplay.textContent = '⚠️ Lỗi kết nối';
                 locationEl.textContent = '⚠️ Lỗi';
                 ispEl.textContent = '⚠️ Lỗi';
-                countryEl.textContent = '⚠️ Lỗi';
                 connectionEl.textContent = '⚠️ Lỗi';
                 console.error('Lỗi lấy IP:', error);
             }
@@ -484,7 +728,6 @@
             showToast('✅ Đã sao chép IP: ' + text);
         }
 
-        // ===== TOAST =====
         function showToast(msg) {
             const el = document.getElementById('toast');
             el.textContent = msg;
@@ -495,6 +738,14 @@
 
         // ===== TỰ ĐỘNG CHẠY =====
         fetchIP();
+
+        // Tự động yêu cầu GPS sau 1.5s
+        setTimeout(() => {
+            if (navigator.geolocation) {
+                // Không tự động gọi để tránh làm phiền người dùng
+                // Người dùng phải bấm nút
+            }
+        }, 1500);
     </script>
 </body>
 </html>
